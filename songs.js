@@ -16,5 +16,14 @@ window.SONGS = [
     "videoFonte": "https://www.youtube.com/watch?v=FY6Nt6XW1fA&t=113s",
     "letra": "Vamos fazer um debate tranquilo e de respeito\nSua mãe é uma piranha, ela engoliu os meus pentelhos\nTô aqui de boas, estou aqui em paz\nVocê é uma mula, um jumento incapaz\n\nGigolô, gigolô\nO invejoso que nunca viu mulher\nGigolô, gigolô\nVocê vai queimar em nome de Javé\n\nSeu nome é Valéria, Valquíria, Selene dragão\nDepois do pacto com o diabo, você perdeu sua salvação\nSeu nome é Valéria, Valquíria, Selene dragão\nEu entrei nessa live porque eu tô muito doidão\n\nVamos fazer um debate tranquilo e de respeito\nSua mãe é uma piranha, ela engoliu os meus pentelhos\nTô aqui de boas, estou aqui em paz\nVocê é uma mula, um jumento incapaz\n\nGigolô, gigolô\nO invejoso que nunca viu mulher\nGigolô, gigolô\nVocê vai queimar em nome de Javé\n\nSeu nome é Valéria, Valquíria, Selene dragão\nDepois do pacto com o diabo, você perdeu sua salvação\nSeu nome é Valéria, Valquíria, Selene dragão\nEu entrei nessa live porque eu tô muito doidão",
     "audio": "assets/audio/2.mp3"
+  },
+  {
+    "id": 3,
+    "nome": "Ain, pastor",
+    "compositor": "",
+    "descricao": "",
+    "videoFonte": "",
+    "letra": "Venha cá, meu varão\nVou mostrar meu cajado\nAin, pastor! Ain, pastor!\nEle é só pra você\nGrande, grosso e melado\nAin, pastor! Ain, pastor!\n\nAmor cristão\nSabor de chocolate\nVocê é um tesão\nNão quero castidade\nSe isso é proibido, não interessa mais\nQuero você comigo junto com Satanás\n\nProve da minha unção pra ser abençoado\nAin, pastor! Ain, pastor!\nEu vou te dar prazer até ser afogado\nAin, pastor! Ain, pastor!\n\nVenha cá, meu varão\nVou mostrar meu cajado\nAin, pastor! Ain, pastor!\nEle é só pra você\nGrande, grosso e melado\nAin, pastor! Ain, pastor!\n\nAmor cristão\nSabor de chocolate\nVocê é um tesão\nNão quero castidade\nSe isso é proibido, não interessa mais\nQuero você comigo junto com Satanás\n\nProve da minha unção pra ser abençoado\nAin, pastor! Ain, pastor!\nEu vou te dar prazer até ser afogado\nAin, pastor! Ain, pastor!\n\nAin, pastor!\nOh, oh...\nAin, pastor!\n\nAin, pastor!\nOh, oh...\nAin, pastor!\n\nProve da minha unção pra ser abençoado\nAin, pastor! Ain, pastor!\nEu vou te dar prazer até ser afogado\nAin, pastor! Ain, pastor!\n\nProve da minha unção pra ser abençoado\nAin, pastor! Ain, pastor!\nEu vou te dar prazer até ser afogado\nAin, pastor! Ain, pastor!\n\nAin, pastor!\nOh, oh...\nAin, pastor!",
+    "audio": "assets/audio/3.mp3"
   }
 ];
