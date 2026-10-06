@@ -107,4 +107,19 @@
   });
 
   render();
+
+  // Reordena por acessos assim que os números chegarem — até lá, fica na
+  // ordem padrão (mais recente primeiro) pra não deixar a lista em branco.
+  if (window.Views) {
+    var slugs = songs.map(function (s) { return slugifyText(s.nome || 'Sem título'); });
+    window.Views.getAll(slugs).then(function (counts) {
+      songs.sort(function (a, b) {
+        var ca = counts[slugifyText(a.nome || 'Sem título')] || 0;
+        var cb = counts[slugifyText(b.nome || 'Sem título')] || 0;
+        if (cb !== ca) return cb - ca;
+        return (b.id || 0) - (a.id || 0);
+      });
+      render();
+    }).catch(function () {});
+  }
 })();

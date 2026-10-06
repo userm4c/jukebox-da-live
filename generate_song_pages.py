@@ -138,6 +138,10 @@ def render_page(song: dict, prev_song: dict | None, next_song: dict | None) -> s
   </main>
 
   <script src="../favorites.js?v=1"></script>
+  <script src="../views.js?v=1"></script>
+  <script>
+    if (window.Views) window.Views.hit({json.dumps(slug)});
+  </script>
   <script>
     (function () {{
       var id = {json.dumps(song_id)};
