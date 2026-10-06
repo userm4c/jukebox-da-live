@@ -72,7 +72,7 @@
       var audioBlock = document.createElement('div');
       if (song.audio) {
         audioBlock.innerHTML = '<div class="field-label">Tocar</div>' +
-          '<audio controls preload="none" src="' + esc(song.audio) + '"></audio>';
+          '<audio controls controlsList="nodownload noplaybackrate" preload="none" src="' + esc(song.audio) + '"></audio>';
       } else {
         audioBlock.innerHTML = '<div class="field-label">Tocar</div><div class="no-audio">Ainda sem áudio enviado pra esta música.</div>';
       }

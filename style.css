@@ -44,9 +44,34 @@ header.top { display: block; }
   display: block;
   border-bottom: 3px solid var(--yellow);
 }
+.seo-summary {
+  margin: 24px 16px 0;
+  text-align: center;
+}
+
+.seo-summary h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--yellow);
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 var(--magenta);
+}
+
+.seo-summary p {
+  margin: 10px auto 0;
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  font-family: var(--font-body);
+}
+
 .sub {
-  color: var(--muted); font-size: 14px; margin: 20px 16px 0; max-width: 54ch;
-  font-family: var(--font-mono);
+  color: var(--muted); font-size: 14px; margin: 20px auto 0; max-width: 54ch;
+  font-family: var(--font-mono); text-align: center;
 }
 
 .toolbar { display: flex; gap: 10px; margin: 20px 16px 18px; align-items: center; }
