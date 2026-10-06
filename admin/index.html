@@ -163,7 +163,7 @@
 (function () {
   'use strict';
 
-  var PASSWORD_HASH = '__PASSWORD_HASH__';
+  var PASSWORD_HASH = 'f4d5c17ee5e6802443fac021cd9f82e1de4765ae09c05a75ebc0bbaecfe816c9';
 
   async function sha256(msg) {
     var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
