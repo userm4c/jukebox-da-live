@@ -48,10 +48,10 @@ def render_page(song: dict, prev_song: dict | None, next_song: dict | None) -> s
     safe_lyrics = html.escape(lyrics)
     # audio/banner/etc em songs.js são relativos à raiz do site (pra servir a
     # home); daqui de dentro de musicas/ precisam subir um nível.
-    audio_url_abs = f"https://userm4c.github.io/jukebox-da-live/{audio_url}" if audio_url else ""
+    audio_url_abs = f"https://userm4c.github.io/misaemaria/{audio_url}" if audio_url else ""
     safe_audio = html.escape(f"../{audio_url}" if audio_url else "", quote=True)
     safe_source = html.escape(source_url, quote=True)
-    safe_url = f"https://userm4c.github.io/jukebox-da-live/musicas/{slug}.html"
+    safe_url = f"https://userm4c.github.io/misaemaria/musicas/{slug}.html"
 
     audio_html = (
         f'<audio controls controlsList="nodownload noplaybackrate" preload="none" src="{safe_audio}"></audio>'
@@ -175,7 +175,7 @@ def write_song_pages(songs: list[dict]) -> list[str]:
         next_song = ordered[i + 1] if i + 1 < len(ordered) else None
         page_path = MUSICAS_DIR / f"{slug}.html"
         page_path.write_text(render_page(song, prev_song, next_song), encoding="utf-8")
-        generated.append(f"https://userm4c.github.io/jukebox-da-live/musicas/{slug}.html")
+        generated.append(f"https://userm4c.github.io/misaemaria/musicas/{slug}.html")
 
     return generated
 
@@ -209,7 +209,7 @@ def render_item_list_json(songs: list[dict]) -> str:
         title = song.get("nome") or "Sem título"
         slug = slugify(title)
         entries.append(
-            '{ "@type": "ListItem", "position": ' + str(idx) + ', "name": ' + json.dumps(title, ensure_ascii=False) + ', "url": "https://userm4c.github.io/jukebox-da-live/musicas/' + slug + '.html" }'
+            '{ "@type": "ListItem", "position": ' + str(idx) + ', "name": ' + json.dumps(title, ensure_ascii=False) + ', "url": "https://userm4c.github.io/misaemaria/musicas/' + slug + '.html" }'
         )
 
     entries_text = ', '.join(entries)
@@ -256,8 +256,8 @@ def update_index_file(songs: list[dict]) -> None:
     "@type": "ItemList",
     "name": "Músicas do Jukebox da Live",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Maquiavélico Plano de Conquista", "url": "https://userm4c.github.io/jukebox-da-live/" },
-      { "@type": "ListItem", "position": 2, "name": "Valéria, Valquíria, Selene dragão", "url": "https://userm4c.github.io/jukebox-da-live/" }
+      { "@type": "ListItem", "position": 1, "name": "Maquiavélico Plano de Conquista", "url": "https://userm4c.github.io/misaemaria/" },
+      { "@type": "ListItem", "position": 2, "name": "Valéria, Valquíria, Selene dragão", "url": "https://userm4c.github.io/misaemaria/" }
     ]
   }
   </script>'''
@@ -280,7 +280,7 @@ def build_sitemap(urls: list[str]) -> str:
 
 def main() -> None:
     songs = read_songs()
-    urls = ["https://userm4c.github.io/jukebox-da-live/"] + write_song_pages(songs)
+    urls = ["https://userm4c.github.io/misaemaria/"] + write_song_pages(songs)
     update_index_file(songs)
     SITEMAP_PATH.write_text(build_sitemap(urls), encoding="utf-8")
     print(f"Generated {len(songs)} song pages, updated homepage links, and updated sitemap.xml")
