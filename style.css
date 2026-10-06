@@ -123,6 +123,18 @@ header.top { display: block; }
   text-decoration: underline;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .sub {
   color: var(--muted); font-size: 14px; margin: 20px auto 0; max-width: 54ch;
   font-family: var(--font-mono); text-align: center;
