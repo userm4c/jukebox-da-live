@@ -137,21 +137,21 @@ input[type="search"]:focus { outline: 2px solid var(--yellow); outline-offset: 1
 .list { display: flex; flex-direction: column; gap: 10px; padding: 0 16px; }
 
 .track {
-  border: 1px solid var(--border); border-radius: 12px; background: var(--surface); overflow: hidden;
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+  border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
   box-shadow: 0 2px 0 rgba(255, 61, 122, .12);
+  text-decoration: none; color: inherit;
+  transition: border-color .15s ease, transform .15s ease;
 }
-.track-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; width: 100%; text-align: left; background: none; border: none; color: inherit; cursor: pointer; font: inherit; }
+.track:hover { border-color: var(--yellow); transform: translateX(2px); }
 .track-num { font-family: var(--font-mono); font-size: 13px; color: var(--yellow); min-width: 26px; }
 .track-main { flex: 1; min-width: 0; }
 .track-title {
   font-family: var(--font-display); font-size: 24px; letter-spacing: .01em; line-height: 1; text-transform: uppercase;
   color: var(--yellow); text-shadow: 2px 2px 0 var(--magenta);
 }
-.track-meta { font-size: 12.5px; color: var(--muted); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-mono); }
-.chev { flex-shrink: 0; width: 18px; height: 18px; color: var(--cyan); transition: transform .15s ease; }
-.track.open .chev { transform: rotate(180deg); }
+.chev { flex-shrink: 0; width: 18px; height: 18px; color: var(--cyan); }
 
-.track-body { border-top: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 14px; background: var(--surface-2); }
 .field-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 6px; }
 
 audio { width: 100%; }

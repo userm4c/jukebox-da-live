@@ -2,7 +2,6 @@
   'use strict';
 
   var songs = (window.SONGS || []).slice().sort(function (a, b) { return (b.id || 0) - (a.id || 0); });
-  var expandedId = null;
   var query = '';
 
   var listEl = document.getElementById('list');
@@ -51,60 +50,16 @@
   }
 
   function renderTrack(song, num) {
-    var open = expandedId === song.id;
-    var el = document.createElement('div');
-    el.className = 'track' + (open ? ' open' : '');
-
     var titleSlug = slugifyText(song.nome || 'Sem título');
-    var head = document.createElement('button');
-    head.className = 'track-head';
-    head.type = 'button';
-    head.innerHTML =
+    var el = document.createElement('a');
+    el.className = 'track';
+    el.href = 'musicas/' + titleSlug + '.html';
+    el.innerHTML =
       '<span class="track-num">' + String(num).padStart(2, '0') + '</span>' +
       '<span class="track-main">' +
-        '<div class="track-title"><a href="musicas/' + titleSlug + '.html">' + esc(song.nome || 'Sem título') + '</a></div>' +
+        '<div class="track-title">' + esc(song.nome || 'Sem título') + '</div>' +
       '</span>' +
-      '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
-    head.addEventListener('click', function () {
-      expandedId = open ? null : song.id;
-      render();
-    });
-    el.appendChild(head);
-
-    if (open) {
-      var body = document.createElement('div');
-      body.className = 'track-body';
-
-      var audioBlock = document.createElement('div');
-      if (song.audio) {
-        audioBlock.innerHTML = '<div class="field-label">Tocar</div>' +
-          '<audio controls controlsList="nodownload noplaybackrate" preload="none" src="' + esc(song.audio) + '"></audio>';
-      } else {
-        audioBlock.innerHTML = '<div class="field-label">Tocar</div><div class="no-audio">Ainda sem áudio enviado pra esta música.</div>';
-      }
-      body.appendChild(audioBlock);
-
-      if (song.descricao) {
-        var descBlock = document.createElement('div');
-        descBlock.innerHTML = '<div class="field-label">Sobre</div><div class="desc">' + esc(song.descricao) + '</div>';
-        body.appendChild(descBlock);
-      }
-
-      if (song.videoFonte) {
-        var linkBlock = document.createElement('div');
-        linkBlock.innerHTML = '<div class="field-label">Origem</div>' +
-          '<a class="srclink" href="' + esc(song.videoFonte) + '" target="_blank" rel="noopener">' +
-          '▶ Ver o vídeo que gerou essa música</a>';
-        body.appendChild(linkBlock);
-      }
-
-      var lyricsBlock = document.createElement('div');
-      lyricsBlock.innerHTML = '<div class="field-label">Letra</div><div class="lyrics">' + esc(song.letra || '') + '</div>';
-      body.appendChild(lyricsBlock);
-
-      el.appendChild(body);
-    }
-
+      '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>';
     return el;
   }
 
