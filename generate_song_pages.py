@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 SONGS_PATH = ROOT / "songs.js"
 MUSICAS_DIR = ROOT / "musicas"
+INDEX_PATH = ROOT / "index.html"
 SITEMAP_PATH = ROOT / "sitemap.xml"
 
 
@@ -120,6 +121,92 @@ def write_song_pages(songs: list[dict]) -> list[str]:
     return generated
 
 
+def render_home_section(songs: list[dict]) -> str:
+    items = []
+    for song in songs:
+        title = song.get("nome") or "Sem título"
+        description = song.get("descricao") or "Música do Jukebox da Live."
+        slug = slugify(title)
+        items.append(
+            f'''        <li>
+          <article>
+            <h3><a href="musicas/{slug}.html">{html.escape(title)}</a></h3>
+            <p>{html.escape(description)}</p>
+          </article>
+        </li>'''
+        )
+
+    return f'''    <section class="seo-index" aria-label="Músicas em destaque">
+      <h2>Músicas em destaque</h2>
+      <ul>
+{chr(10).join(items)}
+      </ul>
+    </section>'''
+
+
+def render_item_list_json(songs: list[dict]) -> str:
+    entries = []
+    for idx, song in enumerate(songs, start=1):
+        title = song.get("nome") or "Sem título"
+        slug = slugify(title)
+        entries.append(
+            '{ "@type": "ListItem", "position": ' + str(idx) + ', "name": ' + json.dumps(title, ensure_ascii=False) + ', "url": "https://userm4c.github.io/jukebox-da-live/musicas/' + slug + '.html" }'
+        )
+
+    entries_text = ', '.join(entries)
+    return (
+        '  <script type="application/ld+json">\n'
+        '  {\n'
+        '    "@context": "https://schema.org",\n'
+        '    "@type": "ItemList",\n'
+        '    "name": "Músicas do Jukebox da Live",\n'
+        '    "itemListElement": [\n'
+        f'      {entries_text}\n'
+        '    ]\n'
+        '  }\n'
+        '  </script>'
+    )
+
+
+def update_index_file(songs: list[dict]) -> None:
+    text = INDEX_PATH.read_text(encoding="utf-8")
+    old_section = '''    <section class="seo-index" aria-label="Músicas em destaque">
+      <h2>Músicas em destaque</h2>
+      <ul>
+        <li>
+          <article>
+            <h3><a href="musicas/maquiavelico-plano-de-conquista.html">Maquiavélico Plano de Conquista</a></h3>
+            <p>Treta entre a Espectro Cinza e o Renan Santos, com uma estrutura de rap que mistura humor, referência cultural e momento icônico da live.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h3><a href="musicas/valeria-valquiria-selene-dragao.html">Valéria, Valquíria, Selene dragão</a></h3>
+            <p>Música inspirada no debate mais caótico e memorável do Pergunte ao ateu, com letras agressivas, engraçadas e muito marcantes para o público.</p>
+          </article>
+        </li>
+      </ul>
+    </section>'''
+
+    new_section = render_home_section(songs)
+    text = text.replace(old_section, new_section)
+
+    old_schema = '''  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Músicas do Jukebox da Live",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Maquiavélico Plano de Conquista", "url": "https://userm4c.github.io/jukebox-da-live/" },
+      { "@type": "ListItem", "position": 2, "name": "Valéria, Valquíria, Selene dragão", "url": "https://userm4c.github.io/jukebox-da-live/" }
+    ]
+  }
+  </script>'''
+
+    text = text.replace(old_schema, render_item_list_json(songs))
+    INDEX_PATH.write_text(text, encoding="utf-8")
+
+
 def build_sitemap(urls: list[str]) -> str:
     items = "\n".join(
         f"  <url>\n    <loc>{url}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>{'1.0' if i == 0 else '0.9'}</priority>\n  </url>"
@@ -135,8 +222,9 @@ def build_sitemap(urls: list[str]) -> str:
 def main() -> None:
     songs = read_songs()
     urls = ["https://userm4c.github.io/jukebox-da-live/"] + write_song_pages(songs)
+    update_index_file(songs)
     SITEMAP_PATH.write_text(build_sitemap(urls), encoding="utf-8")
-    print(f"Generated {len(songs)} song pages and updated sitemap.xml")
+    print(f"Generated {len(songs)} song pages, updated homepage links, and updated sitemap.xml")
 
 
 if __name__ == "__main__":
