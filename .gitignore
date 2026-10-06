@@ -1,0 +1,5 @@
+# Gerados por generate_song_pages.py a cada deploy (CI) a partir de songs.js —
+# nunca editar à mão, e não faz sentido versionar: ficam sempre desatualizados
+# localmente assim que alguém usa o admin.
+/musicas/
+/sitemap.xml
