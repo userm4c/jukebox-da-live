@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jukebox da Live — Admin</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg: #0f0f0f; --panel: #171717; --card: #1e1e1e; --border: rgba(255,255,255,.1);
+    --text: #fff; --muted: rgba(255,255,255,.5); --accent: #e8a23d; --accent-ink: #1c1309; --danger: #e2574c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; }
+  h1, h2, .brand { font-family: 'Bebas Neue', sans-serif; letter-spacing: .02em; }
+  a { color: inherit; }
+  input, textarea, select {
+    width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text); font-family: inherit; font-size: 14px;
+  }
+  textarea { resize: vertical; }
+  label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .06em; }
+  .field { margin-bottom: 14px; }
+  button {
+    cursor: pointer; font-family: inherit; font-weight: 600; font-size: 14px; padding: 10px 16px;
+    border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text);
+  }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  button.danger { background: transparent; color: var(--danger); border-color: var(--danger); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  button.link { background: none; border: none; color: var(--muted); padding: 4px; font-weight: 500; }
+
+  /* login screen */
+  #loginScreen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .login-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 32px; width: 100%; max-width: 360px; }
+  .login-card h1 { font-size: 32px; margin: 0 0 20px; text-align: center; }
+  #loginError { color: var(--danger); font-size: 13px; margin-top: 10px; min-height: 16px; }
+
+  /* app shell */
+  #app { display: none; max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+  .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .app-header h1 { font-size: 28px; margin: 0; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .tab-btn { background: none; border: none; border-bottom: 2px solid transparent; border-radius: 0; padding: 10px 4px; margin-right: 16px; color: var(--muted); }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .song-row {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px;
+  }
+  .song-row .meta { flex: 1; min-width: 0; }
+  .song-row .meta .n { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .song-row .meta .c { font-size: 12px; color: var(--muted); }
+  .song-row .actions { display: flex; gap: 6px; }
+
+  .panel-box { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+  #statusMsg { font-size: 13px; color: var(--muted); margin-top: 10px; min-height: 16px; }
+  #statusMsg.ok { color: #4caf50; }
+  #statusMsg.err { color: var(--danger); }
+  .hint { font-size: 12px; color: var(--muted); margin-top: -8px; margin-bottom: 14px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <h1>Jukebox Admin</h1>
+    <div class="field">
+      <label for="loginPw">Senha</label>
+      <input type="password" id="loginPw" autofocus>
+    </div>
+    <button class="primary" style="width:100%" id="loginBtn">Entrar</button>
+    <div id="loginError"></div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="app-header">
+    <h1>Jukebox Admin</h1>
+    <button class="link" id="logoutBtn">Sair</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="tab-musicas">Músicas</button>
+    <button class="tab-btn" data-tab="tab-config">Configurações</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-musicas">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <button id="reloadBtn">↻ Recarregar</button>
+      <button class="primary" id="newSongBtn">+ Nova música</button>
+    </div>
+    <div id="songList"></div>
+  </div>
+
+  <div class="tab-panel" id="tab-config">
+    <div class="panel-box">
+      <div class="field">
+        <label for="ghUser">Utilizador GitHub</label>
+        <input type="text" id="ghUser" placeholder="userm4c">
+      </div>
+      <div class="field">
+        <label for="ghRepo">Repositório</label>
+        <input type="text" id="ghRepo" placeholder="jukebox-da-live">
+      </div>
+      <div class="field">
+        <label for="ghToken">Personal Access Token</label>
+        <input type="password" id="ghToken" placeholder="github_pat_…">
+      </div>
+      <p class="hint">Token fine-grained (GitHub → Settings → Developer settings → Fine-grained tokens), com permissão "Contents: Read and write" só neste repositório.</p>
+      <div class="form-actions">
+        <button id="testConnBtn">Testar ligação</button>
+        <button class="primary" id="saveConfigBtn">Guardar</button>
+      </div>
+      <div id="configStatus"></div>
+    </div>
+  </div>
+
+  <div id="statusMsg"></div>
+</div>
+
+<div class="login-card" id="editOverlay" hidden style="position:fixed; inset:0; margin:auto; max-width:560px; max-height:88vh; overflow-y:auto; z-index:50; background:var(--panel);">
+  <h2 id="editTitle" style="font-size:24px; margin-top:0;">Nova música</h2>
+  <form id="editForm">
+    <div class="field">
+      <label for="f-nome">Nome da música</label>
+      <input type="text" id="f-nome" required>
+    </div>
+    <div class="field">
+      <label for="f-compositor">Compositor</label>
+      <input type="text" id="f-compositor">
+    </div>
+    <div class="field">
+      <label for="f-descricao">Descrição</label>
+      <textarea id="f-descricao" rows="3"></textarea>
+    </div>
+    <div class="field">
+      <label for="f-video">Link do vídeo que gerou a música</label>
+      <input type="url" id="f-video" placeholder="https://youtube.com/watch?v=…">
+    </div>
+    <div class="field">
+      <label for="f-letra">Letra</label>
+      <textarea id="f-letra" rows="8" required></textarea>
+    </div>
+    <div class="field">
+      <label for="f-audio">Áudio (mp3, wav, m4a, ogg…)</label>
+      <input type="file" id="f-audio" accept="audio/*">
+      <div class="hint" id="currentAudioHint" style="margin-top:6px;"></div>
+    </div>
+    <div class="form-actions">
+      <button type="button" id="cancelEditBtn">Cancelar</button>
+      <button type="submit" class="primary" id="submitEditBtn">Guardar</button>
+    </div>
+  </form>
+</div>
+<div id="editBackdrop" hidden style="position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:40;"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var PASSWORD_HASH = '__PASSWORD_HASH__';
+
+  async function sha256(msg) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+    return Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+  }
+
+  var loginScreen = document.getElementById('loginScreen');
+  var app = document.getElementById('app');
+  var loginError = document.getElementById('loginError');
+
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+  document.getElementById('loginPw').addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
+
+  async function doLogin() {
+    var pw = document.getElementById('loginPw').value;
+    var hash = await sha256(pw);
+    if (hash === PASSWORD_HASH) {
+      sessionStorage.setItem('admin_auth', '1');
+      enterApp();
+    } else {
+      loginError.textContent = 'Senha incorreta.';
+    }
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', function () {
+    sessionStorage.removeItem('admin_auth');
+    location.reload();
+  });
+
+  function enterApp() {
+    loginScreen.style.display = 'none';
+    app.style.display = 'block';
+    initApp();
+  }
+
+  if (sessionStorage.getItem('admin_auth') === '1') enterApp();
+
+  // ---- tabs ----
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---- github config ----
+  var ghUser, ghRepo, ghToken;
+
+  function loadConfig() {
+    ghUser = localStorage.getItem('gh_user') || '';
+    ghRepo = localStorage.getItem('gh_repo') || '';
+    ghToken = localStorage.getItem('gh_token') || '';
+    document.getElementById('ghUser').value = ghUser;
+    document.getElementById('ghRepo').value = ghRepo;
+    document.getElementById('ghToken').value = ghToken;
+  }
+
+  document.getElementById('saveConfigBtn').addEventListener('click', function () {
+    ghUser = document.getElementById('ghUser').value.trim();
+    ghRepo = document.getElementById('ghRepo').value.trim();
+    ghToken = document.getElementById('ghToken').value.trim();
+    localStorage.setItem('gh_user', ghUser);
+    localStorage.setItem('gh_repo', ghRepo);
+    localStorage.setItem('gh_token', ghToken);
+    setConfigStatus('Configuração guardada.', true);
+  });
+
+  document.getElementById('testConnBtn').addEventListener('click', async function () {
+    ghUser = document.getElementById('ghUser').value.trim();
+    ghRepo = document.getElementById('ghRepo').value.trim();
+    ghToken = document.getElementById('ghToken').value.trim();
+    setConfigStatus('A testar…', true);
+    var r = await ghGetFile('songs.js');
+    if (r) setConfigStatus('Ligação OK — songs.js encontrado.', true);
+    else setConfigStatus('Falha — confere utilizador/repositório/token.', false);
+  });
+
+  function setConfigStatus(msg, ok) {
+    var el = document.getElementById('configStatus');
+    el.textContent = msg;
+    el.style.color = ok ? '#4caf50' : 'var(--danger)';
+  }
+
+  function ghHeaders() {
+    return { 'Authorization': 'Bearer ' + ghToken, 'Accept': 'application/vnd.github+json' };
+  }
+  function ghUrl(path) {
+    return 'https://api.github.com/repos/' + ghUser + '/' + ghRepo + '/contents/' + path;
+  }
+  function fetchWithTimeout(url, opts, ms) {
+    var controller = new AbortController();
+    var t = setTimeout(function () { controller.abort(); }, ms || 12000);
+    return fetch(url, Object.assign({}, opts, { signal: controller.signal })).finally(function () { clearTimeout(t); });
+  }
+  async function ghGetFile(path) {
+    try {
+      var res = await fetchWithTimeout(ghUrl(path), { headers: ghHeaders() });
+      return res.ok ? res.json() : null;
+    } catch (e) { return null; }
+  }
+  async function ghPutFile(path, b64, sha, message) {
+    var body = { message: message, content: b64 };
+    if (sha) body.sha = sha;
+    try {
+      var res = await fetchWithTimeout(ghUrl(path), { method: 'PUT', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()), body: JSON.stringify(body) }, 20000);
+      return res.ok ? res.json() : null;
+    } catch (e) { return null; }
+  }
+  async function ghDeleteFile(path, sha, message) {
+    try {
+      var res = await fetchWithTimeout(ghUrl(path), { method: 'DELETE', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()), body: JSON.stringify({ message: message, sha: sha }) });
+      return res.ok;
+    } catch (e) { return false; }
+  }
+  function fileToBase64(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(reader.result.split(',')[1]); };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  function textToBase64(text) {
+    return btoa(unescape(encodeURIComponent(text)));
+  }
+  function base64ToText(b64) {
+    return decodeURIComponent(escape(atob(b64)));
+  }
+
+  // ---- songs state ----
+  var songs = [];
+  var songsSha = null;
+  var editingId = null;
+  var pendingAudioFile = null;
+
+  function setStatus(msg, kind) {
+    var el = document.getElementById('statusMsg');
+    el.textContent = msg;
+    el.className = kind || '';
+  }
+
+  async function loadSongs() {
+    setStatus('A carregar…');
+    var file = await ghGetFile('songs.js');
+    if (!file) { setStatus('Falha ao carregar songs.js — confere a configuração.', 'err'); return; }
+    songsSha = file.sha;
+    var content = base64ToText(file.content);
+    var match = content.match(/window\.SONGS\s*=\s*(\[[\s\S]*\]);?/);
+    songs = match ? JSON.parse(match[1]) : [];
+    setStatus('');
+    renderList();
+  }
+
+  function renderList() {
+    var el = document.getElementById('songList');
+    if (!songs.length) {
+      el.innerHTML = '<p style="color:var(--muted)">Nenhuma música ainda. Clica em "+ Nova música".</p>';
+      return;
+    }
+    el.innerHTML = '';
+    songs.slice().sort(function (a, b) { return (b.id || 0) - (a.id || 0); }).forEach(function (song) {
+      var row = document.createElement('div');
+      row.className = 'song-row';
+      row.innerHTML =
+        '<div class="meta"><div class="n"></div><div class="c"></div></div>' +
+        '<div class="actions"><button class="edit">Editar</button><button class="danger del">Apagar</button></div>';
+      row.querySelector('.n').textContent = song.nome || 'Sem título';
+      row.querySelector('.c').textContent = song.compositor || '';
+      row.querySelector('.edit').addEventListener('click', function () { openEdit(song); });
+      row.querySelector('.del').addEventListener('click', function () { deleteSong(song); });
+      el.appendChild(row);
+    });
+  }
+
+  document.getElementById('reloadBtn').addEventListener('click', loadSongs);
+  document.getElementById('newSongBtn').addEventListener('click', function () { openEdit(null); });
+
+  var editOverlay = document.getElementById('editOverlay');
+  var editBackdrop = document.getElementById('editBackdrop');
+  var editForm = document.getElementById('editForm');
+
+  function openEdit(song) {
+    editingId = song ? song.id : null;
+    pendingAudioFile = null;
+    document.getElementById('editTitle').textContent = song ? 'Editar música' : 'Nova música';
+    document.getElementById('f-nome').value = song ? song.nome || '' : '';
+    document.getElementById('f-compositor').value = song ? song.compositor || '' : '';
+    document.getElementById('f-descricao').value = song ? song.descricao || '' : '';
+    document.getElementById('f-video').value = song ? song.videoFonte || '' : '';
+    document.getElementById('f-letra').value = song ? song.letra || '' : '';
+    document.getElementById('f-audio').value = '';
+    document.getElementById('currentAudioHint').textContent = song && song.audio ? ('Áudio atual: ' + song.audio) : '';
+    editOverlay.hidden = false;
+    editBackdrop.hidden = false;
+  }
+  function closeEdit() {
+    editOverlay.hidden = true;
+    editBackdrop.hidden = true;
+  }
+  document.getElementById('cancelEditBtn').addEventListener('click', closeEdit);
+  editBackdrop.addEventListener('click', closeEdit);
+
+  async function saveSongsFile(message) {
+    var js = 'window.SONGS = ' + JSON.stringify(songs, null, 2) + ';\n';
+    var r = await ghPutFile('songs.js', textToBase64(js), songsSha, message);
+    if (r) { songsSha = r.content.sha; return true; }
+    return false;
+  }
+
+  editForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var submitBtn = document.getElementById('submitEditBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'A guardar…';
+    setStatus('A guardar…');
+
+    var nome = document.getElementById('f-nome').value.trim();
+    var letra = document.getElementById('f-letra').value;
+    if (!nome || !letra.trim()) {
+      setStatus('Nome e letra são obrigatórios.', 'err');
+      submitBtn.disabled = false; submitBtn.textContent = 'Guardar';
+      return;
+    }
+
+    var isNew = editingId == null;
+    var id = isNew ? (songs.reduce(function (m, s) { return Math.max(m, s.id || 0); }, 0) + 1) : editingId;
+    var existing = isNew ? {} : songs.find(function (s) { return s.id === editingId; }) || {};
+    var audioPath = existing.audio || null;
+
+    var fileInput = document.getElementById('f-audio');
+    var file = fileInput.files && fileInput.files[0];
+    if (file) {
+      var ext = (file.name.split('.').pop() || 'mp3').toLowerCase();
+      var path = 'assets/audio/' + id + '.' + ext;
+      var existingFile = await ghGetFile(path);
+      var b64 = await fileToBase64(file);
+      var up = await ghPutFile(path, b64, existingFile ? existingFile.sha : null, 'chore: upload audio ' + id);
+      if (!up) {
+        setStatus('Falha ao enviar o áudio. Tenta de novo.', 'err');
+        submitBtn.disabled = false; submitBtn.textContent = 'Guardar';
+        return;
+      }
+      audioPath = path;
+    }
+
+    var data = {
+      id: id,
+      nome: nome,
+      compositor: document.getElementById('f-compositor').value.trim(),
+      descricao: document.getElementById('f-descricao').value.trim(),
+      videoFonte: document.getElementById('f-video').value.trim(),
+      letra: letra,
+      audio: audioPath
+    };
+
+    if (isNew) songs.push(data);
+    else songs = songs.map(function (s) { return s.id === editingId ? data : s; });
+
+    var ok = await saveSongsFile('chore: ' + (isNew ? 'adicionar' : 'editar') + ' música "' + nome + '"');
+    submitBtn.disabled = false; submitBtn.textContent = 'Guardar';
+    if (ok) {
+      setStatus('Guardado.', 'ok');
+      closeEdit();
+      renderList();
+    } else {
+      setStatus('Falha ao guardar. Recarrega e tenta de novo.', 'err');
+    }
+  });
+
+  async function deleteSong(song) {
+    if (!confirmInline('Apagar "' + song.nome + '"?')) return;
+    songs = songs.filter(function (s) { return s.id !== song.id; });
+    setStatus('A apagar…');
+    var ok = await saveSongsFile('chore: apagar música "' + song.nome + '"');
+    if (ok) {
+      setStatus('Apagada.', 'ok');
+      if (song.audio) {
+        var f = await ghGetFile(song.audio);
+        if (f) await ghDeleteFile(song.audio, f.sha, 'chore: remover áudio ' + song.id);
+      }
+      renderList();
+    } else {
+      setStatus('Falha ao apagar.', 'err');
+      loadSongs();
+    }
+  }
+
+  function confirmInline(msg) {
+    return window.confirm(msg);
+  }
+
+  function initApp() {
+    loadConfig();
+    if (ghUser && ghRepo && ghToken) loadSongs();
+    else setStatus('Configura o GitHub na aba "Configurações" primeiro.', 'err');
+  }
+})();
+</script>
+</body>
+</html>
