@@ -61,6 +61,21 @@ def render_page(song: dict) -> str:
         else ""
     )
 
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "MusicRecording",
+        "name": title,
+        "url": safe_url,
+        "description": description,
+        "byArtist": {"@type": "MusicGroup", "name": "Misa & Maria"},
+    }
+    if audio_url:
+        schema["audio"] = {"@type": "AudioObject", "contentUrl": audio_url}
+    if source_url:
+        schema["isPartOf"] = {"@type": "CreativeWork", "url": source_url}
+
+    schema_json = json.dumps(schema, ensure_ascii=False)
+
     return f'''<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -73,6 +88,7 @@ def render_page(song: dict) -> str:
   <meta property="og:type" content="website">
   <meta property="og:url" content="{safe_url}">
   <link rel="canonical" href="{safe_url}">
+  <script type="application/ld+json">{schema_json}</script>
   <title>{meta_title} | Jukebox da Live</title>
   <link rel="stylesheet" href="../style.css?v=1">
 </head>
