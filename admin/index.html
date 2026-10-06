@@ -432,8 +432,23 @@
   async function saveSongsFile(message) {
     var js = 'window.SONGS = ' + JSON.stringify(songs, null, 2) + ';\n';
     var r = await ghPutFile('songs.js', textToBase64(js), songsSha, message);
-    if (r) { songsSha = r.content.sha; return true; }
-    return false;
+    if (!r) return false;
+    songsSha = r.content.sha;
+    // songs.js fica em cache até 10min no GitHub Pages — sem isto, quem
+    // tinha a página aberta recentemente não veria a música nova a tempo.
+    bumpCacheVersion().catch(function () {});
+    return true;
+  }
+
+  async function bumpCacheVersion() {
+    var file = await ghGetFile('index.html');
+    if (!file) return;
+    var html = base64ToText(file.content);
+    var match = html.match(/songs\.js\?v=(\d+)/);
+    var next = match ? (parseInt(match[1], 10) + 1) : 1;
+    var updated = html.replace(/songs\.js(\?v=\d+)?/, 'songs.js?v=' + next);
+    if (updated === html) return;
+    await ghPutFile('index.html', textToBase64(updated), file.sha, 'chore: invalidar cache de songs.js (v' + next + ')');
   }
 
   editForm.addEventListener('submit', async function (e) {
