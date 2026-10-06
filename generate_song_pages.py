@@ -45,7 +45,10 @@ def render_page(song: dict) -> str:
     meta_title = html.escape(title, quote=True)
     description_text = html.escape(description, quote=True)
     safe_lyrics = html.escape(lyrics)
-    safe_audio = html.escape(audio_url, quote=True)
+    # audio/banner/etc em songs.js são relativos à raiz do site (pra servir a
+    # home); daqui de dentro de musicas/ precisam subir um nível.
+    audio_url_abs = f"https://userm4c.github.io/jukebox-da-live/{audio_url}" if audio_url else ""
+    safe_audio = html.escape(f"../{audio_url}" if audio_url else "", quote=True)
     safe_source = html.escape(source_url, quote=True)
     safe_url = f"https://userm4c.github.io/jukebox-da-live/musicas/{slug}.html"
 
@@ -56,7 +59,8 @@ def render_page(song: dict) -> str:
     )
 
     source_html = (
-        f'<p><a href="{safe_source}" target="_blank" rel="noopener">Ver o vídeo que gerou essa música</a></p>'
+        f'<div class="field-label">Origem</div>'
+        f'<a class="srclink" href="{safe_source}" target="_blank" rel="noopener">▶ Ver o vídeo que gerou essa música</a>'
         if source_url
         else ""
     )
@@ -70,7 +74,7 @@ def render_page(song: dict) -> str:
         "byArtist": {"@type": "MusicGroup", "name": "Misa & Maria"},
     }
     if audio_url:
-        schema["audio"] = {"@type": "AudioObject", "contentUrl": audio_url}
+        schema["audio"] = {"@type": "AudioObject", "contentUrl": audio_url_abs}
     if source_url:
         schema["isPartOf"] = {"@type": "CreativeWork", "url": source_url}
 
@@ -90,7 +94,7 @@ def render_page(song: dict) -> str:
   <link rel="canonical" href="{safe_url}">
   <script type="application/ld+json">{schema_json}</script>
   <title>{meta_title} | Jukebox da Live</title>
-  <link rel="stylesheet" href="../style.css?v=2">
+  <link rel="stylesheet" href="../style.css?v=3">
 </head>
 <body>
   <header class="top">
@@ -104,17 +108,17 @@ def render_page(song: dict) -> str:
 
     <article class="song-page">
       <h1>{meta_title}</h1>
-      <p class="song-meta">Música da live • {html.escape(description, quote=True)}</p>
+      <p class="song-meta">Música da live</p>
 
+      <div class="field-label">Tocar</div>
       {audio_html}
 
-      <h2>Sobre a música</h2>
+      <div class="field-label">Sobre</div>
       <p>{html.escape(description, quote=True)}</p>
 
-      <h2>Origem</h2>
       {source_html}
 
-      <h2>Letra</h2>
+      <div class="field-label">Letra</div>
       <div class="lyrics">{safe_lyrics}</div>
     </article>
   </main>
