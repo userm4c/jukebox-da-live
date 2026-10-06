@@ -36,7 +36,7 @@ def read_songs() -> list[dict]:
 
 def render_page(song: dict, prev_song: dict | None, next_song: dict | None) -> str:
     title = song.get("nome") or "Sem título"
-    description = song.get("descricao") or "Letra e contexto da música do Jukebox da Live."
+    description = song.get("descricao") or "Letra e contexto da música do Arquivo Misa & Maria."
     lyrics = song.get("letra") or ""
     source_url = song.get("videoFonte") or ""
     audio_url = song.get("audio") or ""
@@ -97,13 +97,13 @@ def render_page(song: dict, prev_song: dict | None, next_song: dict | None) -> s
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index,follow">
   <meta name="description" content="{description_text}">
-  <meta property="og:title" content="{meta_title} | Jukebox da Live">
+  <meta property="og:title" content="{meta_title} | Arquivo Misa & Maria">
   <meta property="og:description" content="{description_text}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{safe_url}">
   <link rel="canonical" href="{safe_url}">
   <script type="application/ld+json">{schema_json}</script>
-  <title>{meta_title} | Jukebox da Live</title>
+  <title>{meta_title} | Arquivo Misa & Maria</title>
   <link rel="stylesheet" href="../style.css?v=6">
 </head>
 <body>
@@ -184,7 +184,7 @@ def render_home_section(songs: list[dict]) -> str:
     items = []
     for song in songs:
         title = song.get("nome") or "Sem título"
-        description = song.get("descricao") or "Música do Jukebox da Live."
+        description = song.get("descricao") or "Música do Arquivo Misa & Maria."
         slug = slugify(title)
         items.append(
             f'''        <li>
@@ -218,7 +218,7 @@ def render_item_list_json(songs: list[dict]) -> str:
         '  {\n'
         '    "@context": "https://schema.org",\n'
         '    "@type": "ItemList",\n'
-        '    "name": "Músicas do Jukebox da Live",\n'
+        '    "name": "Músicas do Arquivo Misa & Maria",\n'
         '    "itemListElement": [\n'
         f'      {entries_text}\n'
         '    ]\n'
@@ -254,7 +254,7 @@ def update_index_file(songs: list[dict]) -> None:
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": "Músicas do Jukebox da Live",
+    "name": "Músicas do Arquivo Misa & Maria",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Maquiavélico Plano de Conquista", "url": "https://userm4c.github.io/misaemaria/" },
       { "@type": "ListItem", "position": 2, "name": "Valéria, Valquíria, Selene dragão", "url": "https://userm4c.github.io/misaemaria/" }
