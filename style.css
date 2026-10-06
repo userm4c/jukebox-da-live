@@ -62,15 +62,6 @@ header.top { display: block; }
   text-shadow: 2px 2px 0 var(--magenta);
 }
 
-.song-meta {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .song-page audio {
   width: 100%;
   margin-top: 8px;
