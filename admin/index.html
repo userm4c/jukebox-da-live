@@ -240,7 +240,7 @@
     setConfigStatus('A testar…', true);
     var r = await ghGetFile('songs.js');
     if (r) setConfigStatus('Ligação OK — songs.js encontrado.', true);
-    else setConfigStatus('Falha — confere utilizador/repositório/token.', false);
+    else setConfigStatus('Falha: ' + lastGhError, false);
   });
 
   function setConfigStatus(msg, ok) {
@@ -249,36 +249,97 @@
     el.style.color = ok ? '#4caf50' : 'var(--danger)';
   }
 
+  var DEFAULT_BRANCH = 'master';
+  var lastGhError = '';
+
   function ghHeaders() {
     return { 'Authorization': 'Bearer ' + ghToken, 'Accept': 'application/vnd.github+json' };
   }
   function ghUrl(path) {
     return 'https://api.github.com/repos/' + ghUser + '/' + ghRepo + '/contents/' + path;
   }
+  function ghApiUrl(subpath) {
+    return 'https://api.github.com/repos/' + ghUser + '/' + ghRepo + '/' + subpath;
+  }
   function fetchWithTimeout(url, opts, ms) {
     var controller = new AbortController();
     var t = setTimeout(function () { controller.abort(); }, ms || 12000);
     return fetch(url, Object.assign({}, opts, { signal: controller.signal })).finally(function () { clearTimeout(t); });
   }
+  async function readGhError(res) {
+    try { var body = await res.json(); return (body && body.message) || (res.status + ' ' + res.statusText); }
+    catch (e) { return res.status + ' ' + res.statusText; }
+  }
   async function ghGetFile(path) {
     try {
       var res = await fetchWithTimeout(ghUrl(path), { headers: ghHeaders() });
-      return res.ok ? res.json() : null;
-    } catch (e) { return null; }
+      if (!res.ok) { lastGhError = await readGhError(res); return null; }
+      return res.json();
+    } catch (e) { lastGhError = e.name === 'AbortError' ? 'tempo esgotado' : String(e); return null; }
   }
   async function ghPutFile(path, b64, sha, message) {
     var body = { message: message, content: b64 };
     if (sha) body.sha = sha;
     try {
       var res = await fetchWithTimeout(ghUrl(path), { method: 'PUT', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()), body: JSON.stringify(body) }, 20000);
-      return res.ok ? res.json() : null;
-    } catch (e) { return null; }
+      if (!res.ok) { lastGhError = await readGhError(res); return null; }
+      return res.json();
+    } catch (e) { lastGhError = e.name === 'AbortError' ? 'tempo esgotado' : String(e); return null; }
   }
   async function ghDeleteFile(path, sha, message) {
     try {
       var res = await fetchWithTimeout(ghUrl(path), { method: 'DELETE', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()), body: JSON.stringify({ message: message, sha: sha }) });
-      return res.ok;
-    } catch (e) { return false; }
+      if (!res.ok) { lastGhError = await readGhError(res); return false; }
+      return true;
+    } catch (e) { lastGhError = e.name === 'AbortError' ? 'tempo esgotado' : String(e); return false; }
+  }
+
+  // A Contents API (ghPutFile) só aceita ficheiros até 1MB — qualquer áudio
+  // passa disso facilmente. Ficheiros maiores exigem a Git Data API: criar um
+  // blob, montar uma árvore nova sobre a árvore do commit atual, criar o
+  // commit e só depois mover a branch pra ele.
+  async function ghPutLargeFile(path, b64, message) {
+    try {
+      var ref = await fetchWithTimeout(ghApiUrl('git/ref/heads/' + DEFAULT_BRANCH), { headers: ghHeaders() }, 20000);
+      if (!ref.ok) { lastGhError = await readGhError(ref); return null; }
+      var refData = await ref.json();
+      var baseSha = refData.object.sha;
+
+      var commitRes = await fetchWithTimeout(ghApiUrl('git/commits/' + baseSha), { headers: ghHeaders() }, 20000);
+      if (!commitRes.ok) { lastGhError = await readGhError(commitRes); return null; }
+      var commitData = await commitRes.json();
+
+      var blobRes = await fetchWithTimeout(ghApiUrl('git/blobs'), {
+        method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()),
+        body: JSON.stringify({ content: b64, encoding: 'base64' })
+      }, 60000);
+      if (!blobRes.ok) { lastGhError = await readGhError(blobRes); return null; }
+      var blobData = await blobRes.json();
+
+      var treeRes = await fetchWithTimeout(ghApiUrl('git/trees'), {
+        method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()),
+        body: JSON.stringify({ base_tree: commitData.tree.sha, tree: [{ path: path, mode: '100644', type: 'blob', sha: blobData.sha }] })
+      }, 20000);
+      if (!treeRes.ok) { lastGhError = await readGhError(treeRes); return null; }
+      var treeData = await treeRes.json();
+
+      var newCommitRes = await fetchWithTimeout(ghApiUrl('git/commits'), {
+        method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()),
+        body: JSON.stringify({ message: message, tree: treeData.sha, parents: [baseSha] })
+      }, 20000);
+      if (!newCommitRes.ok) { lastGhError = await readGhError(newCommitRes); return null; }
+      var newCommitData = await newCommitRes.json();
+
+      var updateRes = await fetchWithTimeout(ghApiUrl('git/refs/heads/' + DEFAULT_BRANCH), {
+        method: 'PATCH', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()),
+        body: JSON.stringify({ sha: newCommitData.sha, force: false })
+      }, 20000);
+      if (!updateRes.ok) { lastGhError = await readGhError(updateRes); return null; }
+      return { sha: blobData.sha };
+    } catch (e) {
+      lastGhError = e.name === 'AbortError' ? 'tempo esgotado' : String(e);
+      return null;
+    }
   }
   function fileToBase64(file) {
     return new Promise(function (resolve, reject) {
@@ -310,7 +371,7 @@
   async function loadSongs() {
     setStatus('A carregar…');
     var file = await ghGetFile('songs.js');
-    if (!file) { setStatus('Falha ao carregar songs.js — confere a configuração.', 'err'); return; }
+    if (!file) { setStatus('Falha ao carregar songs.js: ' + lastGhError, 'err'); return; }
     songsSha = file.sha;
     var content = base64ToText(file.content);
     var match = content.match(/window\.SONGS\s*=\s*(\[[\s\S]*\]);?/);
@@ -398,13 +459,18 @@
     var fileInput = document.getElementById('f-audio');
     var file = fileInput.files && fileInput.files[0];
     if (file) {
+      if (file.size > 95 * 1024 * 1024) {
+        setStatus('Ficheiro grande demais (máx. ~95MB).', 'err');
+        submitBtn.disabled = false; submitBtn.textContent = 'Guardar';
+        return;
+      }
+      setStatus('A enviar áudio… (pode demorar um pouco em ficheiros grandes)');
       var ext = (file.name.split('.').pop() || 'mp3').toLowerCase();
       var path = 'assets/audio/' + id + '.' + ext;
-      var existingFile = await ghGetFile(path);
       var b64 = await fileToBase64(file);
-      var up = await ghPutFile(path, b64, existingFile ? existingFile.sha : null, 'chore: upload audio ' + id);
+      var up = await ghPutLargeFile(path, b64, 'chore: upload audio ' + id);
       if (!up) {
-        setStatus('Falha ao enviar o áudio. Tenta de novo.', 'err');
+        setStatus('Falha ao enviar o áudio: ' + lastGhError, 'err');
         submitBtn.disabled = false; submitBtn.textContent = 'Guardar';
         return;
       }
