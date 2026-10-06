@@ -21,7 +21,7 @@ window.SONGS = [
     "id": 3,
     "nome": "Ain, pastor",
     "compositor": "",
-    "descricao": "",
+    "descricao": "Vídeo de origem ainda não encontrado.",
     "videoFonte": "",
     "letra": "Venha cá, meu varão\nVou mostrar meu cajado\nAin, pastor! Ain, pastor!\nEle é só pra você\nGrande, grosso e melado\nAin, pastor! Ain, pastor!\n\nAmor cristão\nSabor de chocolate\nVocê é um tesão\nNão quero castidade\nSe isso é proibido, não interessa mais\nQuero você comigo junto com Satanás\n\nProve da minha unção pra ser abençoado\nAin, pastor! Ain, pastor!\nEu vou te dar prazer até ser afogado\nAin, pastor! Ain, pastor!\n\nVenha cá, meu varão\nVou mostrar meu cajado\nAin, pastor! Ain, pastor!\nEle é só pra você\nGrande, grosso e melado\nAin, pastor! Ain, pastor!\n\nAmor cristão\nSabor de chocolate\nVocê é um tesão\nNão quero castidade\nSe isso é proibido, não interessa mais\nQuero você comigo junto com Satanás\n\nProve da minha unção pra ser abençoado\nAin, pastor! Ain, pastor!\nEu vou te dar prazer até ser afogado\nAin, pastor! Ain, pastor!\n\nAin, pastor!\nOh, oh...\nAin, pastor!\n\nAin, pastor!\nOh, oh...\nAin, pastor!\n\nProve da minha unção pra ser abençoado\nAin, pastor! Ain, pastor!\nEu vou te dar prazer até ser afogado\nAin, pastor! Ain, pastor!\n\nProve da minha unção pra ser abençoado\nAin, pastor! Ain, pastor!\nEu vou te dar prazer até ser afogado\nAin, pastor! Ain, pastor!\n\nAin, pastor!\nOh, oh...\nAin, pastor!",
     "audio": "assets/audio/3.mp3"
