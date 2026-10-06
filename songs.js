@@ -43,5 +43,14 @@ window.SONGS = [
     "videoFonte": "https://www.youtube.com/watch?v=0D5_NVKASOc",
     "letra": "Prova que você é ateu, então\nProva, então fala\nSe é verdade que não há nada\nMostra o vazio na tua fala\nTão sutil, tão fina a linha\nEntre o acaso e a mão divina\n\nSe a lua mudasse um lugarzinho\nSe o sol queimasse só mais um pouquinho\nVocê diz que não há evidências\nMas eu pedi pra Deus segurar e ele segurou\n\nMisa diz que não há certezas\nNem monstros, nem espaguete\nEu rio porque é tão humano\nNegar o toque do eterno plano\n\nÔ, ô, ô, ô, ô, ô...\n\nSe a lua mudasse um lugarzinho\nSe o sol queimasse só mais um pouquinho\nVocê diz que não há evidências\nMas eu pedi pra Deus segurar e ele segurou\n\nQuem prova o nada?\nQuem sente o vento?\nQuem vê o fogo e nega o momento?\n\nÔ, ô...\n\nSe a lua mudasse um lugarzinho\nSe o sol queimasse só mais um pouquinho\nVocê diz que não há evidências\nMas eu pedi pra Deus segurar e ele segurou",
     "audio": "assets/audio/5.mp3"
+  },
+  {
+    "id": 6,
+    "nome": "Feto bala",
+    "compositor": "",
+    "descricao": "Durante um Pergunte ao ateu, um crente criou a teoria do \"Feto bala\" para explicar o aborto.",
+    "videoFonte": "https://www.youtube.com/watch?v=Ybq558b4rV0",
+    "letra": "É feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\n\nNão é uma vida, nem parece uma pessoa\nParece uma cusparada, uma pocinha de porra\nÉ o fetilson, seu parente do abortilson\nSeu feto bala é irado, mata enquanto tá saindo\n\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\n\nÉ o feto bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala\nÉ o feto bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala\n\nNão é uma vida, nem parece uma pessoa\nParece uma cusparada, uma pocinha de porra\nÉ o fetilson, seu parente do abortilson\nSeu feto bala é irado, mata enquanto tá saindo\n\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\n\nÉ o feto bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala\nÉ o feto bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala",
+    "audio": "assets/audio/6.mp3"
   }
 ];
