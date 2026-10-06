@@ -17,7 +17,7 @@
 
   function matches(song, q) {
     if (!q) return true;
-    var hay = ((song.nome || '') + ' ' + (song.compositor || '') + ' ' + (song.letra || '')).toLowerCase();
+    var hay = ((song.nome || '') + ' ' + (song.letra || '')).toLowerCase();
     return hay.indexOf(q) !== -1;
   }
 
@@ -57,7 +57,6 @@
       '<span class="track-num">' + String(num).padStart(2, '0') + '</span>' +
       '<span class="track-main">' +
         '<div class="track-title">' + esc(song.nome || 'Sem título') + '</div>' +
-        '<div class="track-meta">' + esc(song.compositor || 'Compositor desconhecido') + '</div>' +
       '</span>' +
       '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
     head.addEventListener('click', function () {
