@@ -45,18 +45,24 @@
     });
   }
 
+  function slugifyText(value) {
+    var text = String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'musica';
+  }
+
   function renderTrack(song, num) {
     var open = expandedId === song.id;
     var el = document.createElement('div');
     el.className = 'track' + (open ? ' open' : '');
 
+    var titleSlug = slugifyText(song.nome || 'Sem título');
     var head = document.createElement('button');
     head.className = 'track-head';
     head.type = 'button';
     head.innerHTML =
       '<span class="track-num">' + String(num).padStart(2, '0') + '</span>' +
       '<span class="track-main">' +
-        '<div class="track-title">' + esc(song.nome || 'Sem título') + '</div>' +
+        '<div class="track-title"><a href="musicas/' + titleSlug + '.html">' + esc(song.nome || 'Sem título') + '</a></div>' +
       '</span>' +
       '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
     head.addEventListener('click', function () {
