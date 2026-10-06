@@ -34,12 +34,13 @@ def read_songs() -> list[dict]:
     return json.loads(cleaned)
 
 
-def render_page(song: dict) -> str:
+def render_page(song: dict, prev_song: dict | None, next_song: dict | None) -> str:
     title = song.get("nome") or "Sem título"
     description = song.get("descricao") or "Letra e contexto da música do Jukebox da Live."
     lyrics = song.get("letra") or ""
     source_url = song.get("videoFonte") or ""
     audio_url = song.get("audio") or ""
+    song_id = song.get("id")
     slug = slugify(title)
 
     meta_title = html.escape(title, quote=True)
@@ -80,6 +81,15 @@ def render_page(song: dict) -> str:
 
     schema_json = json.dumps(schema, ensure_ascii=False)
 
+    nav_links = ""
+    if prev_song:
+        prev_slug = slugify(prev_song.get("nome") or "Sem título")
+        nav_links += f'<a class="prev" href="{prev_slug}.html">← {html.escape(prev_song.get("nome") or "Sem título")}</a>'
+    if next_song:
+        next_slug = slugify(next_song.get("nome") or "Sem título")
+        nav_links += f'<a class="next" href="{next_slug}.html">{html.escape(next_song.get("nome") or "Sem título")} →</a>'
+    song_nav_html = f'<nav class="song-nav">{nav_links}</nav>' if nav_links else ""
+
     return f'''<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -94,7 +104,7 @@ def render_page(song: dict) -> str:
   <link rel="canonical" href="{safe_url}">
   <script type="application/ld+json">{schema_json}</script>
   <title>{meta_title} | Jukebox da Live</title>
-  <link rel="stylesheet" href="../style.css?v=5">
+  <link rel="stylesheet" href="../style.css?v=6">
 </head>
 <body>
   <header class="top">
@@ -107,7 +117,10 @@ def render_page(song: dict) -> str:
     </nav>
 
     <article class="song-page">
-      <h1>{meta_title}</h1>
+      <div class="song-title-row">
+        <h1>{meta_title}</h1>
+        <button type="button" class="fav-btn song-fav" id="songFavBtn" aria-label="Adicionar aos favoritos">♡</button>
+      </div>
 
       <div class="field-label">Tocar</div>
       {audio_html}
@@ -119,8 +132,26 @@ def render_page(song: dict) -> str:
 
       <div class="field-label">Letra</div>
       <div class="lyrics">{safe_lyrics}</div>
+
+      {song_nav_html}
     </article>
   </main>
+
+  <script src="../favorites.js?v=1"></script>
+  <script>
+    (function () {{
+      var id = {json.dumps(song_id)};
+      var btn = document.getElementById('songFavBtn');
+      if (!btn || !window.Favorites || id == null) return;
+      function paint(fav) {{
+        btn.classList.toggle('active', fav);
+        btn.textContent = fav ? '♥' : '♡';
+        btn.setAttribute('aria-label', fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos');
+      }}
+      paint(window.Favorites.isFavorite(id));
+      btn.addEventListener('click', function () {{ paint(window.Favorites.toggleFavorite(id)); }});
+    }})();
+  </script>
 </body>
 </html>
 '''
@@ -130,11 +161,16 @@ def write_song_pages(songs: list[dict]) -> list[str]:
     MUSICAS_DIR.mkdir(exist_ok=True)
     generated = []
 
-    for song in songs:
+    # Mesma ordem da home (main.js): id decrescente, mais recente primeiro.
+    ordered = sorted(songs, key=lambda s: s.get("id") or 0, reverse=True)
+
+    for i, song in enumerate(ordered):
         title = song.get("nome") or "Sem título"
         slug = slugify(title)
+        prev_song = ordered[i - 1] if i > 0 else None
+        next_song = ordered[i + 1] if i + 1 < len(ordered) else None
         page_path = MUSICAS_DIR / f"{slug}.html"
-        page_path.write_text(render_page(song), encoding="utf-8")
+        page_path.write_text(render_page(song, prev_song, next_song), encoding="utf-8")
         generated.append(f"https://userm4c.github.io/jukebox-da-live/musicas/{slug}.html")
 
     return generated

@@ -12,7 +12,7 @@
   <link rel="canonical" href="https://userm4c.github.io/jukebox-da-live/musicas/valeria-valquiria-selene-dragao.html">
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MusicRecording", "name": "Valéria, Valquíria, Selene dragão", "url": "https://userm4c.github.io/jukebox-da-live/musicas/valeria-valquiria-selene-dragao.html", "description": "O crente mais insano que já falou no pergunte ao ateu, o icônico Manu.", "byArtist": {"@type": "MusicGroup", "name": "Misa & Maria"}, "audio": {"@type": "AudioObject", "contentUrl": "https://userm4c.github.io/jukebox-da-live/assets/audio/2.mp3"}, "isPartOf": {"@type": "CreativeWork", "url": "https://www.youtube.com/watch?v=FY6Nt6XW1fA&t=113s"}}</script>
   <title>Valéria, Valquíria, Selene dragão | Jukebox da Live</title>
-  <link rel="stylesheet" href="../style.css?v=5">
+  <link rel="stylesheet" href="../style.css?v=6">
 </head>
 <body>
   <header class="top">
@@ -25,7 +25,10 @@
     </nav>
 
     <article class="song-page">
-      <h1>Valéria, Valquíria, Selene dragão</h1>
+      <div class="song-title-row">
+        <h1>Valéria, Valquíria, Selene dragão</h1>
+        <button type="button" class="fav-btn song-fav" id="songFavBtn" aria-label="Adicionar aos favoritos">♡</button>
+      </div>
 
       <div class="field-label">Tocar</div>
       <audio controls controlsList="nodownload noplaybackrate" preload="none" src="../assets/audio/2.mp3"></audio>
@@ -65,7 +68,25 @@ Seu nome é Valéria, Valquíria, Selene dragão
 Depois do pacto com o diabo, você perdeu sua salvação
 Seu nome é Valéria, Valquíria, Selene dragão
 Eu entrei nessa live porque eu tô muito doidão</div>
+
+      <nav class="song-nav"><a class="next" href="maquiavelico-plano-de-conquista.html">Maquiavélico Plano de Conquista →</a></nav>
     </article>
   </main>
+
+  <script src="../favorites.js?v=1"></script>
+  <script>
+    (function () {
+      var id = 2;
+      var btn = document.getElementById('songFavBtn');
+      if (!btn || !window.Favorites || id == null) return;
+      function paint(fav) {
+        btn.classList.toggle('active', fav);
+        btn.textContent = fav ? '♥' : '♡';
+        btn.setAttribute('aria-label', fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos');
+      }
+      paint(window.Favorites.isFavorite(id));
+      btn.addEventListener('click', function () { paint(window.Favorites.toggleFavorite(id)); });
+    })();
+  </script>
 </body>
 </html>

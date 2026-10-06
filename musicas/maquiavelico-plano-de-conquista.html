@@ -12,7 +12,7 @@
   <link rel="canonical" href="https://userm4c.github.io/jukebox-da-live/musicas/maquiavelico-plano-de-conquista.html">
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MusicRecording", "name": "Maquiavélico Plano de Conquista", "url": "https://userm4c.github.io/jukebox-da-live/musicas/maquiavelico-plano-de-conquista.html", "description": "Treta entre a Espectro Cinza e o Renan Santos.", "byArtist": {"@type": "MusicGroup", "name": "Misa & Maria"}, "audio": {"@type": "AudioObject", "contentUrl": "https://userm4c.github.io/jukebox-da-live/assets/audio/1.mp3"}, "isPartOf": {"@type": "CreativeWork", "url": "https://youtu.be/5NwldblTNgw?t=463&si=LaJ2QcTFt5UuE02I"}}</script>
   <title>Maquiavélico Plano de Conquista | Jukebox da Live</title>
-  <link rel="stylesheet" href="../style.css?v=5">
+  <link rel="stylesheet" href="../style.css?v=6">
 </head>
 <body>
   <header class="top">
@@ -25,7 +25,10 @@
     </nav>
 
     <article class="song-page">
-      <h1>Maquiavélico Plano de Conquista</h1>
+      <div class="song-title-row">
+        <h1>Maquiavélico Plano de Conquista</h1>
+        <button type="button" class="fav-btn song-fav" id="songFavBtn" aria-label="Adicionar aos favoritos">♡</button>
+      </div>
 
       <div class="field-label">Tocar</div>
       <audio controls controlsList="nodownload noplaybackrate" preload="none" src="../assets/audio/1.mp3"></audio>
@@ -77,7 +80,25 @@ Vou ter acabado com um, um Adolf Hitler 2
 Ah, ah, ah...
 Um Adolf Hitler 2
 Ah, ah, ah...</div>
+
+      <nav class="song-nav"><a class="prev" href="valeria-valquiria-selene-dragao.html">← Valéria, Valquíria, Selene dragão</a></nav>
     </article>
   </main>
+
+  <script src="../favorites.js?v=1"></script>
+  <script>
+    (function () {
+      var id = 1;
+      var btn = document.getElementById('songFavBtn');
+      if (!btn || !window.Favorites || id == null) return;
+      function paint(fav) {
+        btn.classList.toggle('active', fav);
+        btn.textContent = fav ? '♥' : '♡';
+        btn.setAttribute('aria-label', fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos');
+      }
+      paint(window.Favorites.isFavorite(id));
+      btn.addEventListener('click', function () { paint(window.Favorites.toggleFavorite(id)); });
+    })();
+  </script>
 </body>
 </html>
