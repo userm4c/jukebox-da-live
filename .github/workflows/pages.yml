@@ -12,6 +12,18 @@ permissions:
   pages: write
   id-token: write
 
+# Sem isto, 3 pushes rápidos (upload de áudio → gravar songs.js → bump de
+# cache) chegam quase juntos no passo "Deploy to GitHub Pages", e o 2º/3º
+# recebem um erro 400 da própria API de Pages porque o anterior ainda está
+# "in progress" lá — ela não enfileira sozinha, só rejeita.
+# cancel-in-progress:false enfileira sem interromper um deploy em andamento;
+# o GitHub, por conta própria, já descarta runs mais antigos que ainda
+# estejam só na fila (não rodando) quando um mais novo chega — então o build
+# final de cada leva de commits sempre reflete o estado completo.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   deploy:
     environment:
