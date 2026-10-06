@@ -90,7 +90,7 @@ def render_page(song: dict) -> str:
   <link rel="canonical" href="{safe_url}">
   <script type="application/ld+json">{schema_json}</script>
   <title>{meta_title} | Jukebox da Live</title>
-  <link rel="stylesheet" href="../style.css?v=1">
+  <link rel="stylesheet" href="../style.css?v=2">
 </head>
 <body>
   <header class="top">
