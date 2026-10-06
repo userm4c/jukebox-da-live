@@ -99,7 +99,7 @@ def render_page(song: dict) -> str:
 
   <main class="wrap">
     <nav class="breadcrumb">
-      <a href="../index.html">← Voltar ao Jukebox</a>
+      <a href="../index.html">← Retornar</a>
     </nav>
 
     <article class="song-page">
