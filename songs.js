@@ -61,5 +61,14 @@ window.SONGS = [
     "videoFonte": "https://www.youtube.com/watch?v=K_qkHiin_QQ",
     "letra": "Fui encurralado por um comunista\nNeste debate eu sou o extremista\nNão posso argumentar com razão\nMas eu achei a final solução\n\nO abortinho vai me salvar\nUm boneco de plástico sem par\nQuando eu perco na argumentação\nEu seguro ele na minha mão\n\nO abortinho vai me salvar\nUm boneco de plástico sem par\nQuando eu perco na argumentação\nEu seguro ele na minha mão\n\nO abortinho vai me salvar\nQuando eu acho que vou vomitar\nAntes de nascer é uma vida\nDepois que nasce chamo a polícia\n\nÔ, ô, ô, ô, ô, ô, ô, ô, ô, ô, ô, ô...\n\nAntes de nascer é uma vida\nDepois que nasce chamo a polícia\n\nO abortinho vai me salvar\nQuando eu acho que vou vomitar\nAntes de nascer é uma vida\nDepois que nasce chamo a polícia",
     "audio": "assets/audio/7.mp3"
+  },
+  {
+    "id": 8,
+    "nome": "Bruxo voador invisível do Congo",
+    "compositor": "",
+    "descricao": "React de um vídeo de um pastor que afirmou que foi perseguido por um bruxo voador no Congo.",
+    "videoFonte": "https://www.youtube.com/watch?v=IUWeVmQwi9U",
+    "letra": "Eu voltava de um culto na República Democrática do Congo\nQuando ouvi o barulho no teto do meu carro\nAssustado, eu disse ao motorista: \"O que é isso?\"\nE ele me falou\n\nEra um bruxo voador\nInvisível, que tem um machado na mão\nEle faz parte do exército rebelde da República Democrática do Congo\nE só eu vi\nE só eu vi\n\nA embaixada ligou e nos avisou\nQue um exército de bruxos rebeldes estava à solta na cidade\nEu comecei a falar em línguas e ele não me viu\n\nEra um bruxo voador\nInvisível, que tem um machado na mão\nEle faz parte do exército rebelde da República Democrática do Congo\nE só eu vi\nE só eu vi\nE só eu vi\n\nA embaixada ligou e nos avisou\nQue um exército de bruxos rebeldes estava à solta na cidade\nEu comecei a falar em línguas e ele não me viu\n\nEra um bruxo voador\nInvisível, que tem um machado na mão\nEle faz parte do exército rebelde da República Democrática do Congo\nE só eu vi\nE só eu vi\nE só eu vi",
+    "audio": "assets/audio/8.mp3"
   }
 ];
