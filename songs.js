@@ -52,5 +52,14 @@ window.SONGS = [
     "videoFonte": "https://www.youtube.com/watch?v=Ybq558b4rV0",
     "letra": "É feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\n\nNão é uma vida, nem parece uma pessoa\nParece uma cusparada, uma pocinha de porra\nÉ o fetilson, seu parente do abortilson\nSeu feto bala é irado, mata enquanto tá saindo\n\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\n\nÉ o feto bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala\nÉ o feto bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala\n\nNão é uma vida, nem parece uma pessoa\nParece uma cusparada, uma pocinha de porra\nÉ o fetilson, seu parente do abortilson\nSeu feto bala é irado, mata enquanto tá saindo\n\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\nÉ feto bala! Saiu do pau do pai dele\nDeixa a concha de su madre depois de quase nove meses\n\nÉ o feto bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala\nÉ o feto bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala, bala",
     "audio": "assets/audio/6.mp3"
+  },
+  {
+    "id": 7,
+    "nome": "O abortinho vai me salvar",
+    "compositor": "",
+    "descricao": "Durante um debate sobre aborto contra o Gustavo Machado, o Lucas Pavanato, que se encontrava totalmente sem argumento nenhum, puxou um boneco de plástico carinhosamente apelidado por nós como Abortinho.",
+    "videoFonte": "https://www.youtube.com/watch?v=K_qkHiin_QQ",
+    "letra": "Fui encurralado por um comunista\nNeste debate eu sou o extremista\nNão posso argumentar com razão\nMas eu achei a final solução\n\nO abortinho vai me salvar\nUm boneco de plástico sem par\nQuando eu perco na argumentação\nEu seguro ele na minha mão\n\nO abortinho vai me salvar\nUm boneco de plástico sem par\nQuando eu perco na argumentação\nEu seguro ele na minha mão\n\nO abortinho vai me salvar\nQuando eu acho que vou vomitar\nAntes de nascer é uma vida\nDepois que nasce chamo a polícia\n\nÔ, ô, ô, ô, ô, ô, ô, ô, ô, ô, ô, ô...\n\nAntes de nascer é uma vida\nDepois que nasce chamo a polícia\n\nO abortinho vai me salvar\nQuando eu acho que vou vomitar\nAntes de nascer é uma vida\nDepois que nasce chamo a polícia",
+    "audio": "assets/audio/7.mp3"
   }
 ];
