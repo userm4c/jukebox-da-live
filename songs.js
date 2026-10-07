@@ -79,5 +79,14 @@ window.SONGS = [
     "videoFonte": "https://www.youtube.com/playlist?list=PLDPoaEeFShIQ",
     "letra": "A aposentadoria é pecado para Deus\nPsico é baboseira, só se importa com o eu\nAutoestima tá errado, você tem que se odiar\nBTS é do diabo e ele vai te enfeitiçar\n\nEu sou contra o aborto, eu detesto gente gay\nEu me meto na sua vida, quero incomodar alguém\nFalo que sou cristã, mas não demonstro amor\nSó no café com tulipas que era pouco e esfriou\n\nTaylor Swift faz bruxaria nos palcos do seu show\nA Kamala é pro-aborto e a esquerda dominou\nAutoestima é contra a Bíblia, empatia também\nJesus Cristo estava errado, mas não me importo com ninguém\n\nEu sou contra o aborto, eu detesto gente gay\nEu me meto na sua vida, quero incomodar alguém\nFalo que sou cristã, mas não demonstro amor\nSó no café com tulipas que era pouco e esfriou\n\nTaylor Swift faz bruxaria nos palcos do seu show\nA Kamala é pro-aborto e a esquerda dominou\nAutoestima é contra a Bíblia, empatia também\nJesus Cristo estava errado, mas não me importo com ninguém\n\nEu sou contra o aborto, eu detesto gente gay\nEu me meto na sua vida, quero incomodar alguém\nFalo que sou cristã, mas não demonstro amor\nSó no café com tulipas que era pouco e esfriou ",
     "audio": "assets/audio/9.mp3"
+  },
+  {
+    "id": 10,
+    "nome": "Chapéu de babaca é cadeira",
+    "compositor": "",
+    "descricao": "Durante o debate da TV Cultura com candidatos à Prefeitura de São Paulo em 2024, o Datena deu uma cadeirada no adversário Pablo Marçal.",
+    "videoFonte": "https://www.youtube.com/shorts/JzRd2QE-A9o",
+    "letra": "Chapéu de babaca é cadeira!\nChapéu de babaca é cadeira!\nIsso eu aprendi com o Datena\nChapéu de babaca é cadeira!\nNão Datena, não!\nNão Datena, não!\nPense na população\nNão pegue a cadeira, não!\n\nVocê não é homem para isso\nVocê não é homem para isso\nAi, você quebrou o meu menisco!\nEu não esperava esse chupisco\n\nChapéu de babaca é cadeira!\nChapéu de babaca é cadeira!\nIsso eu aprendi com o Datena\nChapéu de babaca é cadeira!\nNão Datena, não!\nNão Datena, não!\nPense na população\nNão pegue a cadeira, não!\n\nVocê não é homem para isso\nVocê não é homem para isso\nAi, você quebrou o meu menisco!\nEu não esperava esse chupisco\n\nChapéu de babaca é cadeira!\nChapéu de babaca é cadeira!\nIsso eu aprendi com o Datena\nChapéu de babaca é cadeira!",
+    "audio": "assets/audio/10.mp3"
   }
 ];
