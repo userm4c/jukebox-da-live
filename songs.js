@@ -88,5 +88,14 @@ window.SONGS = [
     "videoFonte": "https://www.youtube.com/shorts/JzRd2QE-A9o",
     "letra": "Chapéu de babaca é cadeira!\nChapéu de babaca é cadeira!\nIsso eu aprendi com o Datena\nChapéu de babaca é cadeira!\nNão Datena, não!\nNão Datena, não!\nPense na população\nNão pegue a cadeira, não!\n\nVocê não é homem para isso\nVocê não é homem para isso\nAi, você quebrou o meu menisco!\nEu não esperava esse chupisco\n\nChapéu de babaca é cadeira!\nChapéu de babaca é cadeira!\nIsso eu aprendi com o Datena\nChapéu de babaca é cadeira!\nNão Datena, não!\nNão Datena, não!\nPense na população\nNão pegue a cadeira, não!\n\nVocê não é homem para isso\nVocê não é homem para isso\nAi, você quebrou o meu menisco!\nEu não esperava esse chupisco\n\nChapéu de babaca é cadeira!\nChapéu de babaca é cadeira!\nIsso eu aprendi com o Datena\nChapéu de babaca é cadeira!",
     "audio": "assets/audio/10.mp3"
+  },
+  {
+    "id": 11,
+    "nome": "Quem criou?",
+    "compositor": "",
+    "descricao": "[Ainda vou adicionar a lore e o vídeo origem]",
+    "videoFonte": "",
+    "letra": "Quem te criou Misa? ele perguntou\nMeus pais, eu disse, foi de lá que começou\nE quem criou os pais? Ele insistiu\nOs avós, respondi com um sorriso sutil\n\nMas ele não parava, queria saber mais\nSubindo a árvore, subindo atrás\nDe onde vem tudo, ele queria enxergar\nAté o início, até o lugar\n\nE quem criou os avós? Os tataravós?\nE quem criou os tataravós? Os tataratataravós?\nNo fim todo mundo voltou pra Lucy\nQue virou um pendrive num filme esquisito\n\nUh, uh, uh, uh, uh, uh, uh, ah, ah, ah, ah, ah..\n\nE ele coçava a barba, olhos no chão\nEu ria baixo, que confusão\nEle disse \"Misa, mas e antes de Lucy?\"\nEu só balancei a cabeça sem mais um chute\n\nEle não parava, era um ciclo sem fim\nEu disse \"talvez a resposta esteja dentro de mim\"\nOu numa estrela, ou numa luz\nTalvez algo que ninguém traduz\n\nE quem criou os avós? Os tataravós?\nE quem criou os tataravós? Os tataratataravós?\nNo fim todo mundo voltou pra Lucy\nQue virou um pendrive num filme esquisito\n\nE quem criou os avós? Os tataravós?\nE quem criou os tataravós? Os tataratataravós?\nNo fim todo mundo voltou pra Lucy\nQue virou um pendrive num filme esquisito",
+    "audio": "assets/audio/11.mp3"
   }
 ];
