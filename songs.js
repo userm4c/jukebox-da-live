@@ -70,5 +70,14 @@ window.SONGS = [
     "videoFonte": "https://www.youtube.com/watch?v=IUWeVmQwi9U",
     "letra": "Eu voltava de um culto na República Democrática do Congo\nQuando ouvi o barulho no teto do meu carro\nAssustado, eu disse ao motorista: \"O que é isso?\"\nE ele me falou\n\nEra um bruxo voador\nInvisível, que tem um machado na mão\nEle faz parte do exército rebelde da República Democrática do Congo\nE só eu vi\nE só eu vi\n\nA embaixada ligou e nos avisou\nQue um exército de bruxos rebeldes estava à solta na cidade\nEu comecei a falar em línguas e ele não me viu\n\nEra um bruxo voador\nInvisível, que tem um machado na mão\nEle faz parte do exército rebelde da República Democrática do Congo\nE só eu vi\nE só eu vi\nE só eu vi\n\nA embaixada ligou e nos avisou\nQue um exército de bruxos rebeldes estava à solta na cidade\nEu comecei a falar em línguas e ele não me viu\n\nEra um bruxo voador\nInvisível, que tem um machado na mão\nEle faz parte do exército rebelde da República Democrática do Congo\nE só eu vi\nE só eu vi\nE só eu vi",
     "audio": "assets/audio/8.mp3"
+  },
+  {
+    "id": 9,
+    "nome": "Café com Tirulipas",
+    "compositor": "",
+    "descricao": "Dessa vez não temos um único vídeo que origina esta música e sim uma coletânea de vídeos da icônica Tirulipas",
+    "videoFonte": "https://www.youtube.com/playlist?list=PLDPoaEeFShIQ",
+    "letra": "A aposentadoria é pecado para Deus\nPsico é baboseira, só se importa com o eu\nAutoestima tá errado, você tem que se odiar\nBTS é do diabo e ele vai te enfeitiçar\n\nEu sou contra o aborto, eu detesto gente gay\nEu me meto na sua vida, quero incomodar alguém\nFalo que sou cristã, mas não demonstro amor\nSó no café com tulipas que era pouco e esfriou\n\nTaylor Swift faz bruxaria nos palcos do seu show\nA Kamala é pro-aborto e a esquerda dominou\nAutoestima é contra a Bíblia, empatia também\nJesus Cristo estava errado, mas não me importo com ninguém\n\nEu sou contra o aborto, eu detesto gente gay\nEu me meto na sua vida, quero incomodar alguém\nFalo que sou cristã, mas não demonstro amor\nSó no café com tulipas que era pouco e esfriou\n\nTaylor Swift faz bruxaria nos palcos do seu show\nA Kamala é pro-aborto e a esquerda dominou\nAutoestima é contra a Bíblia, empatia também\nJesus Cristo estava errado, mas não me importo com ninguém\n\nEu sou contra o aborto, eu detesto gente gay\nEu me meto na sua vida, quero incomodar alguém\nFalo que sou cristã, mas não demonstro amor\nSó no café com tulipas que era pouco e esfriou ",
+    "audio": "assets/audio/9.mp3"
   }
 ];
