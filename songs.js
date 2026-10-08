@@ -97,5 +97,14 @@ window.SONGS = [
     "videoFonte": "",
     "letra": "Quem te criou Misa? ele perguntou\nMeus pais, eu disse, foi de lá que começou\nE quem criou os pais? Ele insistiu\nOs avós, respondi com um sorriso sutil\n\nMas ele não parava, queria saber mais\nSubindo a árvore, subindo atrás\nDe onde vem tudo, ele queria enxergar\nAté o início, até o lugar\n\nE quem criou os avós? Os tataravós?\nE quem criou os tataravós? Os tataratataravós?\nNo fim todo mundo voltou pra Lucy\nQue virou um pendrive num filme esquisito\n\nUh, uh, uh, uh, uh, uh, uh, ah, ah, ah, ah, ah..\n\nE ele coçava a barba, olhos no chão\nEu ria baixo, que confusão\nEle disse \"Misa, mas e antes de Lucy?\"\nEu só balancei a cabeça sem mais um chute\n\nEle não parava, era um ciclo sem fim\nEu disse \"talvez a resposta esteja dentro de mim\"\nOu numa estrela, ou numa luz\nTalvez algo que ninguém traduz\n\nE quem criou os avós? Os tataravós?\nE quem criou os tataravós? Os tataratataravós?\nNo fim todo mundo voltou pra Lucy\nQue virou um pendrive num filme esquisito\n\nE quem criou os avós? Os tataravós?\nE quem criou os tataravós? Os tataratataravós?\nNo fim todo mundo voltou pra Lucy\nQue virou um pendrive num filme esquisito",
     "audio": "assets/audio/11.mp3"
+  },
+  {
+    "id": 12,
+    "nome": "Eu sou a protector",
+    "compositor": "",
+    "descricao": "[Ainda vou adicionar a lore e o vídeo origem]",
+    "videoFonte": "",
+    "letra": "Eu sou Dandara, sou a protector\nAvisei esse sistema que eles não são nada sem eu\nEu sou Dandara, sou a protector\nPosso fumar um cigarrinho enquanto falo com você?\n\nEu sou Dandara, sou a protector\nUma entre um milhão, eu sou a melhor de nós sem esse sistema\nResiliência\nMinha história é tão ridícula que nem eu acreditei\n\nVocê se importa se eu fumar?\nEu avisei essa menina que isso era uma má ideia\nVocê se importa se eu fumar?\nEu avisei essa menina que isso era uma má ideia\n\nEu sou Dandara, sou a protector\nAvisei esse sistema que eles não são nada sem eu\nEu sou Dandara, sou a protector\nPosso fumar um cigarrinho enquanto falo com você?\n\nEu sou Dandara, sou a protector\nUma entre um milhão, eu sou a melhor de nós sem esse sistema\nResiliência\nMinha história é tão ridícula que nem eu acreditei\n\nVocê se importa se eu fumar?\nEu avisei essa menina que isso era uma má ideia\nVocê se importa se eu fumar?\nEu avisei essa menina que isso era uma má ideia",
+    "audio": "assets/audio/12.mp3"
   }
 ];
