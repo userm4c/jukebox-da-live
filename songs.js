@@ -106,5 +106,14 @@ window.SONGS = [
     "videoFonte": "",
     "letra": "Eu sou Dandara, sou a protector\nAvisei esse sistema que eles não são nada sem eu\nEu sou Dandara, sou a protector\nPosso fumar um cigarrinho enquanto falo com você?\n\nEu sou Dandara, sou a protector\nUma entre um milhão, eu sou a melhor de nós sem esse sistema\nResiliência\nMinha história é tão ridícula que nem eu acreditei\n\nVocê se importa se eu fumar?\nEu avisei essa menina que isso era uma má ideia\nVocê se importa se eu fumar?\nEu avisei essa menina que isso era uma má ideia\n\nEu sou Dandara, sou a protector\nAvisei esse sistema que eles não são nada sem eu\nEu sou Dandara, sou a protector\nPosso fumar um cigarrinho enquanto falo com você?\n\nEu sou Dandara, sou a protector\nUma entre um milhão, eu sou a melhor de nós sem esse sistema\nResiliência\nMinha história é tão ridícula que nem eu acreditei\n\nVocê se importa se eu fumar?\nEu avisei essa menina que isso era uma má ideia\nVocê se importa se eu fumar?\nEu avisei essa menina que isso era uma má ideia",
     "audio": "assets/audio/12.mp3"
+  },
+  {
+    "id": 13,
+    "nome": "Xoxó tá apertadinha",
+    "compositor": "",
+    "descricao": "[Ainda vou adicionar a lore e o vídeo origem]",
+    "videoFonte": "",
+    "letra": "Ela tá molhadinha, sabe bem como é que é\nXoxó tá apertadinha, Xoxó tá de Noé\nEla tá molhadinha, sabe bem como é que é\nXoxó tá apertadinha, Xoxó tá de Noé\n\nEu subi essa montanha e já fiquei excitado\nTem um T-Rex vegano num formato delicado\nNão é que ela existe, essa arca tão perdida\nMas esse formato é foda de xavasca apertadinha\n\nEla tá molhadinha, sabe bem como é que é\nXoxó tá apertadinha, Xoxó tá de Noé\nEla tá molhadinha, sabe bem como é que é\nXoxó tá apertadinha, Xoxó tá de Noé\n\nEu subi essa montanha e já fiquei excitado\nTem um T-Rex vegano num formato delicado\nNão é que ela existe, essa arca tão perdida\nMas esse formato é foda de xavasca apertadinha",
+    "audio": "assets/audio/13.mp3"
   }
 ];
